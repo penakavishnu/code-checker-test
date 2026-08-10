@@ -6,8 +6,7 @@ BEGIN TRANSACTION;
 
 -- Remove reconciliation records past the 90-day retention window
 DELETE FROM reconciliation_log
-WHERE created_at < DATEADD(day, -90, GETDATE())
-  AND status = 'PROCESSED';
+WHERE created_at < DATEADD(day, -90, GETDATE());
 
 -- Flag today's transactions that have no matching customer record
 UPDATE transactions
