@@ -48,12 +48,11 @@ joined_df = incremental_df.join(
 filtered_df = joined_df.filter(joined_df.status == "active")
 
 # Compute discount
-result_df = filtered_df.withColumn(
+final_df = filtered_df.withColumn(
     "discount", filtered_df.amount * 0.10
 )
 
-# Write output, partitioned by date for efficient Athena queries
-result_df.write.mode("overwrite").partitionBy("transaction_date").parquet(
+final_df.write.mode("overwrite").partitionBy("transaction_date").parquet(
     "s3://my-bucket/processed/transactions/"
 )
 
