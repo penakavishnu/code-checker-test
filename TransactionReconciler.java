@@ -19,14 +19,13 @@ public class TransactionReconciler {
                      "LEFT JOIN customers c ON t.customer_id = c.customer_id " +
                      "WHERE c.customer_id IS NULL AND t.transaction_date = CURRENT_DATE";
 
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        Connection conn = dataSource.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-            return 0;
+        if (rs.next()) {
+            return rs.getInt(1);
         }
+        return 0;
     }
 }
