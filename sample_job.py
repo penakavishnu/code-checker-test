@@ -53,7 +53,7 @@ result_df = filtered_df.withColumn(
 )
 
 # Write output, partitioned by date for efficient Athena queries
-result_df.write.mode("overwrite").partitionBy("transaction_date").parquet(
+result_df.write.mode("append").partitionBy("transaction_date").parquet(
     "s3://my-bucket/processed/transactions/"
 )
 
